@@ -3,6 +3,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 40px;
+  background-color: #e66465;
 }
 
 button {
@@ -20,6 +21,8 @@ button {
   background-color: #54BAB9;
   padding: 8px;
   margin-top: 10%;
+  border-style: solid;
+  border-width: thick;
 }
 
 .display {
@@ -27,6 +30,10 @@ button {
   flex-direction: row-reverse;
   background-color: #18978F;
   color: #16003B;
+  width: 248px;
+  height: 47px;
+  flex-shrink: 1;
+  flex-wrap:wrap;
 }
 
 .button-wrapper {
