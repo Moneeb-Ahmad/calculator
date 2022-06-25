@@ -1,5 +1,3 @@
-let x = 5;
-let y = 2;
 const PLUS = "+";
 const SUB = "-";
 const MUL = "*";
@@ -7,21 +5,14 @@ const DIVIDE = "/";
 const EQ = "=";
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
-const operations=['*','+','-','/','='];
+const operations = ['*', '+', '-', '/', '='];
 let operFlip = false;
 let opDone = false;
 let op1 = true;
-let lastOpChange = false;
 let lastOperation = '';
 let no1 = 0;
 let no2 = 0;
 let eqFlip = false;
-
-console.log(operate(PLUS, x, y));
-console.log(operate(SUB, x, y));
-console.log(operate(MUL, x, y));
-console.log(operate(DIVIDE, x, y));
-
 let dispVal = '';
 let dispCounter = 0;
 
@@ -39,7 +30,8 @@ function multiply(n1, n2) {
 
 function divide(n1, n2) {
   let ret = n2 === 0 ? "OOPS" : n1 / n2;
-  ret = ret === "OOPS" ?  ret : ret.toFixed(1);
+  ret = ret === "OOPS" ? ret : ret.toFixed(1);
+  return ret;
 }
 
 function operate(op, n1, n2) {
@@ -61,9 +53,9 @@ function operate(op, n1, n2) {
   return "OOPS";
 }
 
-function updateDisplay(input,operation) {
-  if(dispCounter >= 11 && !operations.includes(operation)) {
-    if(input == "Clear") {
+function updateDisplay(input, operation) {
+  if (dispCounter >= 11 && !operations.includes(operation)) {
+    if (input == "Clear") {
       dispVal = "";
       display.textContent = '';
       dispCounter = 0;
@@ -78,10 +70,10 @@ function updateDisplay(input,operation) {
     }
     return;
   }
-  if(operations.includes(operation)) {
-    if(op1) {
-      if(!operFlip) {
-        if(operation === EQ) {
+  if (operations.includes(operation)) {
+    if (op1) {
+      if (!operFlip) {
+        if (operation === EQ) {
           eqFlip = true;
         }
         no2 = Number(dispVal);
@@ -93,7 +85,7 @@ function updateDisplay(input,operation) {
         lastOperation = operation;
       } else {
         lastOperation = operation;
-        if(lastOperation === EQ) {
+        if (lastOperation === EQ) {
           operFlip = false;
         } else {
           no1 = Number(dispVal);
@@ -102,38 +94,44 @@ function updateDisplay(input,operation) {
         }
       }
     } else {
-      if(operation === EQ) {
+      if (!eqFlip) {
+        if (operation === EQ) {
           eqFlip = true;
 
+        }
+        no2 = Number(dispVal);
+        dispVal = operate(lastOperation, no1, no2);
+        no1 = Number(dispVal);
+        dispVal = dispVal.toString();
+        opDone = true;
+        lastOperation = operation;
+      } else {
+        eqFlip = false;
+        lastOperation = operation
       }
-          no2 = Number(dispVal);
-          dispVal = operate(lastOperation, no1, no2);
-          no1 = Number(dispVal);
-          dispVal = dispVal.toString();
-          opDone = true;
-          lastOperation = operation
     }
 
+
   } else {
-    switch(input) {
+    switch (input) {
       case "Clear":
-      dispVal = "";
-      display.textContent = '';
-      dispCounter = 0;
-      op1 = true;
-      operFlip = false;
-      no1 = 0;
-      no2 = 0;
-      eqFlip = false;
-      lastOpChange = false;
-      lastOperation = '';
+        dispVal = "";
+        display.textContent = '';
+        dispCounter = 0;
+        op1 = true;
+        operFlip = false;
+        no1 = 0;
+        no2 = 0;
+        eqFlip = false;
+        lastOpChange = false;
+        lastOperation = '';
         break;
       default:
         break;
     }
   }
   display.textContent = dispVal;
-  if(opDone) {
+  if (opDone) {
     dispVal = '';
     dispCounter = 0;
     opDone = false;
@@ -145,8 +143,8 @@ buttons.forEach((button) => {
     let dontCall = false;
     let input = button.textContent.trim();
     let operation = '';
-    if(!operations.includes(input)) {
-      if(eqFlip) {
+    if (!operations.includes(input)) {
+      if (eqFlip) {
         dispVal = "";
         display.textContent = '';
         dispCounter = 0;
@@ -162,22 +160,19 @@ buttons.forEach((button) => {
       dispVal += input;
       dispCounter++;
       operation = '';
-    }
-    else {
-      if(eqFlip) {
-        if(input === EQ) {
+    } else {
+      if (eqFlip) {
+        if (input === EQ) {
           dontCall = true;
         }
 
       }
       operation = input;
       operFlip = operFlip ? false : true;
-      console.log(`oper ${operFlip}`);
     }
-    if(!dontCall) {
-      updateDisplay(input,operation);
+    if (!dontCall) {
+      updateDisplay(input, operation);
     }
     dontCall = false;
-    console.log(button.textContent.trim());
   });
 });
