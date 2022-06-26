@@ -47,7 +47,7 @@ function reset() {
   no1 = 0;
   no2 = 0;
   lastOperation = '';
-  opMode = true;
+  opMode = false;
 }
 
 function operate(op, n1, n2) {
@@ -81,6 +81,7 @@ function updateDisplay(input, operation) {
       if (!operFlip) {
         if (operation === EQ) {
           eqFlip = true;
+		  opMode = false;
         }
         no2 = Number(dispVal);
         dispVal = operate(lastOperation, no1, no2);
@@ -105,6 +106,7 @@ function updateDisplay(input, operation) {
       if (!eqFlip) {
         if (operation === EQ) {
           eqFlip = true;
+		  opMode = false;
         }
         no2 = Number(dispVal);
         dispVal = operate(lastOperation, no1, no2);
@@ -151,6 +153,7 @@ buttons.forEach((button) => {
         if (input === EQ) {
           dontCall = true;
         }
+		opMode = false;
       }
       if (opMode) {
         dontCall = true
